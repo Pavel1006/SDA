@@ -28,7 +28,7 @@ void read_student(struct Student *student)
     {
         printf("Invalid input! Please enter a valid age: ");
         while (getchar() != '\n')
-            ; // Clear input buffer
+            ;
     }
 
     printf("Enter student's average grade: ");
@@ -36,7 +36,7 @@ void read_student(struct Student *student)
     {
         printf("Invalid input! Please enter a valid average grade: ");
         while (getchar() != '\n')
-            ; // Clear input buffer
+            ;
     }
 
     printf("Enter student's specialization: ");
@@ -90,7 +90,7 @@ void insert_beginning(struct Node **head, struct Student student)
     *head = new_node;
 }
 
-void insert_end(struct Node **head, struct Student student)
+void insert_end(struct Node **head, struct Student student, int *length_list)
 {
     struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
     if (new_node == NULL)
@@ -102,6 +102,7 @@ void insert_end(struct Node **head, struct Student student)
     new_node->next = NULL;
     if (*head == NULL)
     {
+        (*length_list)++;
         *head = new_node;
         return;
     }
@@ -109,6 +110,7 @@ void insert_end(struct Node **head, struct Student student)
     while (current->next != NULL)
     {
         current = current->next;
+        (*length_list)++;
     }
     current->next = new_node;
 }
@@ -178,6 +180,7 @@ void clear_list(struct Node **head)
 
 int main()
 {
+    int length_list = 0;
     struct Node *list = NULL;
     int option;
     do
@@ -198,7 +201,7 @@ int main()
         {
             struct Student student;
             read_student(&student);
-            insert_end(&list, student);
+            insert_end(&list, student, &length_list);
             break;
         }
         case 2:
@@ -227,7 +230,14 @@ int main()
         {
             int position;
             printf("Enter position of student to delete: ");
-            scanf("%d", &position);
+
+            while ((scanf("%d", &position) != 1) || (position < 0) || (position > length_list))
+            {
+                printf("Invalid input! Please enter a valid position: ");
+                while (getchar() != '\n')
+                    ;
+            }
+
             delete_student(&list, position);
             printf("Student deleted successfully.\n");
             break;
@@ -253,6 +263,7 @@ int main()
             printf("Invalid option!\n");
         }
     } while (option != 0);
+    
 
     return 0;
 }

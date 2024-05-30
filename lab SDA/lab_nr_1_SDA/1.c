@@ -9,33 +9,33 @@ struct Book
     float price;
 };
 
-void introduceBooks(struct Book arr[], int n)
+void introduce_books(struct Book book_array[], int num_of_books)
 {
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < num_of_books; i++)
     {
         printf("\nEnter details about book %d \n", i + 1);
         printf("Enter title: ");
-        scanf("%s", arr[i].title);
+        scanf("%s", book_array[i].title);
 
         printf("Enter author: ");
-        scanf("%s", arr[i].author);
+        scanf("%s", book_array[i].author);
 
         printf("Enter number of pages: ");
-        scanf("%d", &arr[i].number_of_pages);
+        scanf("%d", &book_array[i].number_of_pages);
 
         printf("Enter price: ");
-        scanf("%f", &arr[i].price);
+        scanf("%f", &book_array[i].price);
     }
 }
 
-void displayBooks(struct Book arr[], int n)
+void display_books(struct Book book_array[], int n)
 {
     printf("\nBooks with price less than $20:\n");
     for (int i = 0; i < n; i++)
     {
-        if (arr[i].price < 20)
+        if (book_array[i].price < 20)
         {
-            printf("Book %d: %s\n", i + 1, arr[i].title);
+            printf("Book %d: %s\n", i + 1, book_array[i].title);
         }
     }
 }
@@ -49,9 +49,9 @@ int main()
 
     struct Book arr_stock_of_books[nr_of_books];
 
-    introduceBooks(arr_stock_of_books, nr_of_books);
+    introduce_books(arr_stock_of_books, nr_of_books);
 
-    displayBooks(arr_stock_of_books, nr_of_books);
+    display_books(arr_stock_of_books, nr_of_books);
 
     return 0;
 }

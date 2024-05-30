@@ -11,10 +11,10 @@ typedef struct
     float price;
 } Book;
 
-void generate_random_book(Book *book, int i)
+void generate_random_book(Book *book, int index_book)
 {
-    sprintf(book->title, "Random Title %d", i);
-    sprintf(book->author, "Random Author %d", i);
+    sprintf(book->title, "Random Title %d", index_book);
+    sprintf(book->author, "Random Author %d", index_book);
     book->number_of_pages = rand() % 500 + 50;
     book->price = (float)(rand() % 1000);
 }
@@ -104,9 +104,34 @@ int delete_book_at_index(Book **books, int *size, int delete_index)
 
 void enter_book_details(Book *new_book)
 {
+    char title[50], author[50];
+    int num_pages;
+    float price;
+    int check_enter_book_value = 0;
+    while (1)
 
-    printf("Enter new book details (Title, Author, Pages, Price): ");
-    scanf("%s %s %d %f", new_book->title, new_book->author, &new_book->number_of_pages, &new_book->price);
+    {
+        printf("\n Enter new book details (Title, Author, Pages, Price): ");
+        if (scanf("%49s %49s %d %f", title, author, &num_pages, &price) != 4)
+        {
+            printf("\n Input invalid! Please enter valid data.\n");
+            check_enter_book_value = 0;
+        }
+        else
+        {
+
+            check_enter_book_value = 1;
+            break;
+        }
+    }
+    if (check_enter_book_value == 1)
+    {
+
+        strcpy(new_book->title, title);
+        strcpy(new_book->author, author);
+        new_book->number_of_pages = num_pages;
+        new_book->price = price;
+    }
 }
 
 int main()
